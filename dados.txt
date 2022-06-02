@@ -1,1 +1,2 @@
-recorde = 1460
+recorde = 0
+versao = 1.0
