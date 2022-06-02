@@ -12,7 +12,7 @@ from random import choice, randint, random
 
 pygame.init()
 
-# Variáveis do jogo, pode alterar sem problemas
+# Variáveis do jogo
 velocidade = 10
 width, height, size = 640, 480, (640, 480)
 branco = 255, 255, 255
