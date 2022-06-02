@@ -12,12 +12,12 @@ from random import choice, randint, random
 
 pygame.init()
 
+# Variáveis do jogo, pode alterar sem problemas
 velocidade = 10
 width, height, size = 640, 480, (640, 480)
 branco = 255, 255, 255
 preto = 0, 0, 0
-colidiu = False
-invencivel = False
+invencivel = False # Coloque True para ignorar os obstáculos
 pontos = 0
 
 tela = pygame.display.set_mode(size)
@@ -33,6 +33,7 @@ som_colisao = pygame.mixer.Sound('sons/death_sound.wav')
 som_pulo = pygame.mixer.Sound('sons/jump_sound.wav')
 som_pontos = pygame.mixer.Sound('sons/score_sound.wav')
 
+# Instanciamento dos objetos
 lis_sprites = pygame.sprite.Group()
 dino = Dino(imagens)
 lis_sprites.add(dino)
@@ -57,16 +58,20 @@ inimigos.add(cacto2)
 
 obstaculo = choice((0, 1))
 recorde = recorde()
+colidiu = False
 
 while True:
+    # Laço do jogo
     relogio.tick(30)
     tela.fill(branco)
-    if colidiu:
+    if colidiu and not invencivel:
+        # Quando ocorre colisão, mostra texto de fim na tela
         txt1 = fonte.render('GAME OVER', True, preto)
         txt2 = fonte_menor.render('Pressione r para continuar', True, preto)
         tela.blit(txt1, (210, 220))
         tela.blit(txt2, (180, 243))
     else:
+        # Não houve colisão, mostra textos de pontuação
         txt = f'Pontos: {pontos}'
         txt2 = f'Recorde: {recorde}'
         formatado = fonte.render(txt, True, preto)
@@ -75,15 +80,20 @@ while True:
         tela.blit(formatado2, (452, 87))
 
     for event in pygame.event.get():
+        # Leitura dos eventos na tela
         if event.type == QUIT:
+            # Fechamento da tela
             pygame.quit()
             exit()
         if event.type == KEYDOWN:
+            # Tecla pressionada
             if pygame.key.get_pressed()[K_SPACE]:
+                # Apertou espaço(pula)
                 if not dino.pulo:
                     som_pulo.play()
                 dino.pular()
             if pygame.key.get_pressed()[K_r] and colidiu:
+                # Game over e apertou r, reinicia o jogo
                 pontos = 0
                 colidiu = False
                 for inimigo in inimigos.sprites():
@@ -94,13 +104,16 @@ while True:
 
     colisoes = pygame.sprite.spritecollide(dino, inimigos, False, pygame.sprite.collide_mask)
     if colisoes:
+        # Verifica se houve alguma colisão
         if not colidiu:
+            # Faz o som de colisão e salva a pontuação, caso seja maior que o recorde
             som_colisao.play()
             salvar(pontos)
             if pontos > recorde:
                 recorde = pontos
             colidiu = True
         if invencivel:
+            # Caso esteja configurado para ser invencível ignora a colisão e atualiza
             pontos += 1
             lis_sprites.update()
     else:
@@ -108,6 +121,7 @@ while True:
         lis_sprites.update()
 
     if pontos % 100 == 0 and not colidiu:
+        # A cada 100 pontos aumenta a velocidade dos obstaculos e reproduz um som
         som_pontos.play()
         for inimigo in inimigos.sprites():
             if inimigo.vel < 23:
@@ -115,6 +129,7 @@ while True:
                 velocidade += 1
 
     if obstaculo == 0 and not cacto.atualizar or obstaculo == 1 and not ptero.atualizar:
+        # Decide quais obstaculos aparecerão na tela
         obstaculo = choice((0, 1))
         if obstaculo == 0:
             cacto.atualizar = True
@@ -127,6 +142,7 @@ while True:
             ptero.atualizar = True
 
     if add_cacto2 and not ptero.atualizar:
+        # Ainda no processo de selecionar obstaculos para a tela
         if 640 - cacto.rect.x >= 100:
             chance = randint(1, 10)
             if chance >= 6:

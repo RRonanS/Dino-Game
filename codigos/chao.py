@@ -2,6 +2,7 @@ import pygame.sprite
 
 
 class Chao(pygame.sprite.Sprite):
+    '''Classe para representar o chão do jogo'''
     def __init__(self, sheet, x):
         pygame.sprite.Sprite.__init__(self)
         img = sheet.subsurface((6*32, 0), (32, 32))
@@ -12,6 +13,7 @@ class Chao(pygame.sprite.Sprite):
         self.rect.center = (x, 480-32)
 
     def update(self):
+        '''Movimenta o chão para criar sensação de movimento na tela'''
         self.rect.x -= self.vel
         if self.rect.topright[0] <= 0:
             self.rect.x = 640

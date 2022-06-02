@@ -3,6 +3,7 @@ from random import randrange
 
 
 class Nuvem(pygame.sprite.Sprite):
+    '''Classe para representar as nuvens no cenário'''
     def __init__(self, sheet, size):
         pygame.sprite.Sprite.__init__(self)
         img = sheet.subsurface((32*7, 0), (32, 32))
@@ -14,6 +15,7 @@ class Nuvem(pygame.sprite.Sprite):
         self.width, self.height = width, height
 
     def update(self):
+        '''Movimenta as nuvens na tela'''
         self.rect.x -= 10
         if self.rect.topright[0] <= 0:
             self.rect.x = self.width

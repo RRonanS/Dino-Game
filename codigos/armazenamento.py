@@ -1,4 +1,5 @@
 def recorde():
+    '''Retorna o recorde armazenado no dados.txt'''
     with open('dados.txt', 'r') as arq:
         l = arq.readlines()
     try:
@@ -10,6 +11,7 @@ def recorde():
 
 
 def salvar(atual):
+    '''Salva a pontuação atual no dados.txt, caso seja maior que o recorde'''
     anterior = recorde()
     if atual > anterior:
         with open('dados.txt', 'w') as arq:

@@ -2,6 +2,7 @@ import pygame
 
 
 class Dino(pygame.sprite.Sprite):
+    '''Classe para representar o player(Dino)'''
     def __init__(self, sheet):
         pygame.sprite.Sprite.__init__(self)
         self.imagens = []
@@ -19,9 +20,11 @@ class Dino(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
     def pular(self):
+        '''Método para fazer o dino pular'''
         self.pulo = True
 
     def update(self):
+        '''Anima o dino e é responsável por atualizar ele na tela caso pule'''
         if self.pulo:
             if self.descendo:
                 self.rect.y += 10

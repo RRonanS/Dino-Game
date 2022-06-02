@@ -3,6 +3,7 @@ from random import choice
 
 
 class Ptero(pygame.sprite.Sprite):
+    '''Classe para representar o obstáculo ptero'''
     def __init__(self, sheet):
         pygame.sprite.Sprite.__init__(self)
         img = sheet.subsurface((3*32, 0), (32, 32))
@@ -19,6 +20,7 @@ class Ptero(pygame.sprite.Sprite):
         self.atualizar = False
 
     def update(self):
+        '''Anima o objeto e o atualiza na tela'''
         if self.atualizar and self.rect.x == 700:
             self.rect.topright = (640, choice((250, 300, 350, 400)))
         if self.atualizar:

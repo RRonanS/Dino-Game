@@ -2,6 +2,7 @@ import pygame.sprite
 
 
 class Cacto(pygame.sprite.Sprite):
+    '''Classe de sprite para representar o cacto simples'''
     def __init__(self, sheet):
         pygame.sprite.Sprite.__init__(self)
         img = sheet.subsurface((32*5, 0), (32, 32))
@@ -14,6 +15,7 @@ class Cacto(pygame.sprite.Sprite):
         self.atualizar = False
 
     def update(self):
+        '''Atualiza o objeto na tela'''
         if self.atualizar and self.rect.x == 700:
             self.rect.bottomright = (640, 480-32)
         if self.atualizar:
